@@ -87,8 +87,11 @@ def make_w_f0_deriv(likelihood_func, w_vot, w_f0):
 
     return func
 
+# vot and f0s over time
 vots = []
 f0s = []
+
+# vot and f0 constraint weights over time
 w_vots = [1.0]
 w_f0s = [5.0]
 
@@ -110,7 +113,9 @@ for epoch in range(NUM_EPOCHS):
     current_vot, current_f0 = res
     vots.append(current_vot)
     f0s.append(current_f0)
-    # print(f"{current_vot= }, {current_f0= }")
+
+    # prints the current state
+    print(f"{current_vot= }, {current_f0= }")
     current_w_vot, current_w_f0 = weights
 
     likelihood_func = make_likelihood_func(current_vot, current_f0)
@@ -145,6 +150,7 @@ for epoch in range(NUM_EPOCHS):
     # update the weights and strart again
     weights = [current_w_vot, current_w_f0]
 
+
 # plotting and saving data to spreadsheets
 # vots_d = pd.DataFrame(vots)
 # vots_d.to_excel("vot_data.xlsx")
@@ -158,22 +164,4 @@ for epoch in range(NUM_EPOCHS):
 # plt.show()
 # plt.plot(f0s)
 # plt.show()
-
-
-# x0 = np.array([105, 5])
-# min_dist = None
-# min_vec = None
-# for w_f0 in range(1, 10):
-#     for w_d in range(10, 11):
-#         for w_f0_asp in range(1, 10):
-#                 res = minimize(loss_vec, x0, method='nelder-mead',
-#                     args=(w_f0, w_d, w_f0_asp), options={'xatol': 1e-8, 'disp': False})
-
-#                 if min_dist is None or np.linalg.norm(res.x-x0) < min_dist:
-#                     min_vec = res.x
-#                     min_dist = np.linalg.norm(res.x-min_vec)
-#                     print(res.x)
-#                     print(w_f0, w_d, w_f0_asp)
-
-# print(min_vec)
 
